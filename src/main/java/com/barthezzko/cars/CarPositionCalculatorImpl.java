@@ -12,7 +12,7 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 	private static final String PARTS_DLMTR = ":";
 	private static final String POS_DLMTR = ",";
 	private Logger logger = Logger.getLogger(CarPositionCalculatorImpl.class);
-	
+
 	public CarPositionCalculatorImpl(int gridSize) {
 		this.gridSize = gridSize;
 	}
@@ -20,6 +20,7 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 	public Position calculate(String input) {
 		Objects.requireNonNull(input, "Initial position and instruction set should be set");
 		Position initial = extractInitialPosition(input);
+		validatePosition(initial);
 		return applyActions(initial, input);
 	}
 
@@ -29,12 +30,14 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 		String actionString = input.substring(input.indexOf(PARTS_DLMTR) + 1);
 		for (char code : actionString.toCharArray()) {
 			logger.debug(code);
-			try{
+			try {
 				ActionCode at = ActionCode.valueOf(String.valueOf(code));
 				at.accept(position);
-				logger.info("After applying [" + code +"] to position: " + position);
-			} catch(IllegalArgumentException ex) {
-				String errorMsg = "Illegal action type, code=" + code + ", supported are: " + Arrays.asList(ActionCode.values());
+				validatePosition(position);
+				logger.info("After applying [" + code + "] to position: " + position);
+			} catch (IllegalArgumentException ex) {
+				String errorMsg = "Illegal action type, code=" + code + ", supported are: "
+						+ Arrays.asList(ActionCode.values());
 				logger.error(errorMsg);
 				throw new IllegalArgumentException(errorMsg);
 			}
@@ -76,11 +79,25 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 		private ActionCode(final Consumer<Position> consumer) {
 			this.consumer = consumer;
 		}
-		
+
 		@Override
 		public void accept(Position t) {
 			consumer.accept(t);
 		}
+	}
 
+	private void validatePosition(Position pos){
+		logger.info("Validating pos: " + pos);
+		if (pos.getX() < 0 || pos.getY() < 0 || pos.getX() > gridSize || pos.getY() > gridSize){
+			throw new InvalidPositionException("Position [" + pos +"] is invalid (is out of grid boundaries)");
+		}
+	}
+
+	public static class InvalidPositionException extends RuntimeException {
+		private static final long serialVersionUID = -1035044120912125748L;
+
+		public InvalidPositionException(String msg) {
+			super(msg);
+		}
 	}
 }
