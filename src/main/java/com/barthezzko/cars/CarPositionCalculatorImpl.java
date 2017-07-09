@@ -39,6 +39,7 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 				throw new IllegalArgumentException(errorMsg);
 			}
 		}
+		logger.info("After applying all transormations: " + position);
 		return position;
 	}
 
@@ -54,7 +55,7 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 					"Initial position should be set with exactly 2 numbers splitted by comma corresponding to coordinates, for ex. [4,5]");
 		}
 		try {
-			return Position.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]));
+			return Position.of(Integer.valueOf(coordinates[0]), Integer.valueOf(coordinates[1]), Direction.NORTH);
 		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException(
 					"Initial position position definition is not valid: " + initialPosString);
@@ -63,11 +64,11 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 
 	enum ActionCode implements Consumer<Position> {
 		L((pos) -> {
-			pos.changeX(-1);
+			pos.rotateLeft();
 		}), F((pos) -> {
-			pos.changeY(1);
+			pos.moveBy(1);
 		}), R((pos) -> {
-			pos.changeX(1);
+			pos.rotateRight();
 		});
 
 		private final Consumer<Position> consumer;
