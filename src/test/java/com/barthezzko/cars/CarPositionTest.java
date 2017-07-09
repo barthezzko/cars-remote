@@ -8,7 +8,7 @@ import com.barthezzko.cars.CarPositionCalculator.Position;
 
 public class CarPositionTest {
 
-	CarPositionCalculator calc = new CarPositionCalculatorImpl();
+	CarPositionCalculator calc = new CarPositionCalculatorImpl(15);
 
 	@Test
 	public void testSimple() {

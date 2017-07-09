@@ -25,6 +25,13 @@ public interface CarPositionCalculator {
 		public int getY() {
 			return y;
 		}
+		
+		public void changeX(int augment){
+			x+=augment;
+		}
+		public void changeY(int augment){
+			y+=augment;
+		}
 
 		@Override
 		public int hashCode() {
@@ -49,6 +56,11 @@ public interface CarPositionCalculator {
 			if (y != other.y)
 				return false;
 			return true;
+		}
+
+		@Override
+		public String toString() {
+			return "Position [x=" + x + ", y=" + y + "]";
 		}
 		
 		
