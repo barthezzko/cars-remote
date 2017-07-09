@@ -12,6 +12,6 @@ public class CarServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest arg0, HttpServletResponse arg1) throws ServletException, IOException {
-		arg1.getWriter().write("qer");
+		arg1.getWriter().write("some response");
 	}
 }
