@@ -2,12 +2,13 @@ package com.barthezzko.web;
 
 import static spark.Spark.port;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Objects;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
-
-import spark.Request;
-import spark.ResponseTransformer;
 
 import com.barthezzko.cars.CarPositionCalculator;
 import com.barthezzko.cars.CarPositionCalculatorImpl;
@@ -17,21 +18,38 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Scopes;
 
-public class Server extends AbstractModule{
-	
-	private static int SERVER_PORT = 9000;
+import spark.Request;
+import spark.ResponseTransformer;
+
+public class Server extends AbstractModule {
+
 	private static Logger logger = Logger.getLogger(Server.class);
 	private static final Gson gson = new Gson();
 	private CarPositionCalculator carPosCalculator;
+	private static final String PROPS_FILE = "src/main/resources/application.properties";
+	private static Properties props = new Properties();
 
 	public static void main(String[] args) {
+		readProperties();
 		Server server = new Server();
 		server.prepareInjection();
 		server.runServer();
 	}
-	
+
+	private static void readProperties() {
+		InputStream input;
+		try {
+			input = new FileInputStream(PROPS_FILE);
+			props.load(input);
+			logger.info("Running server with configuration: " + props);
+		} catch (IOException e1) {
+			logger.error("Couldn't load properties from file from [" + PROPS_FILE + "]", e1);
+			throw new RuntimeException("Server is shutdown due to improper configuration, check more for details");
+		}
+	}
+
 	private void runServer() {
-		port(SERVER_PORT);
+		port(propInt("server.port"));
 		new RestController(carPosCalculator);
 	}
 
@@ -47,10 +65,10 @@ public class Server extends AbstractModule{
 
 	@Override
 	protected void configure() {
-		bind(Config.class).toInstance(new Config(15));
+		bind(Config.class).toInstance(new Config(propInt("gridSize")));
 		bind(CarPositionCalculator.class).to(CarPositionCalculatorImpl.class).in(Scopes.SINGLETON);
 	}
-	
+
 	public static Response success(Object obj) {
 		return new Response(ResponseType.SUCCESS, obj);
 	}
@@ -81,6 +99,7 @@ public class Server extends AbstractModule{
 	enum ResponseType {
 		SUCCESS, ERROR
 	}
+
 	public static String toJson(Object object) {
 		return gson.toJson(object);
 	}
@@ -88,9 +107,16 @@ public class Server extends AbstractModule{
 	public static ResponseTransformer json() {
 		return Server::toJson;
 	}
+
 	public static String param(Request req, String name) {
-		String value = "POST".equals(req.requestMethod()) ? req.params(name) : req.queryParams(name);
+		String value = "GET".equals(req.requestMethod()) ? req.params(name) : req.queryParams(name);
 		Objects.requireNonNull(value, "Input parameter [" + name + "] should not be empty");
 		return value;
+	}
+	
+	private int propInt(String key){
+		String strValue = props.getProperty(key);
+		Objects.requireNonNull(strValue);
+		return Integer.valueOf(strValue);
 	}
 }
