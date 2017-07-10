@@ -1,16 +1,17 @@
 package com.barthezzko.cars;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.barthezzko.cars.CarPositionCalculator.Direction;
 import com.barthezzko.cars.CarPositionCalculator.Position;
 import com.barthezzko.cars.CarPositionCalculatorImpl.InvalidPositionException;
+import com.barthezzko.web.Config;
 
 public class CarPositionTest {
 
-	CarPositionCalculator calc = new CarPositionCalculatorImpl(15);
+	private final CarPositionCalculator calc = new CarPositionCalculatorImpl(new Config(15));
 
 	@Test
 	public void testSimple() {
