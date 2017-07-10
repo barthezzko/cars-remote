@@ -12,7 +12,7 @@ Code | Behavior
 ------------ | -------------
 R | rotate clockwise (right)
 F | move in forward according to current direction on teh grid
-L | rotate clockwise (left)
+L | rotate counterClockwise (left)
 
 ## Simple testing cases
 Input | Expected
