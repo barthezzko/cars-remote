@@ -1,0 +1,54 @@
+doctype html
+html(lang='en')
+  head
+    link(rel='icon', href='../../favicon.ico')
+    title Remote Car Position Calculator
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    link(href='css/styles.css', rel='stylesheet')
+    
+  body
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='javascript:void(0);') 
+            span.glyphicon.glyphicon-cloud
+            |  Remote Cars
+
+    .container
+      p
+        .col-md-6
+          .panel.panel-default 
+            .panel-heading 
+              span.glyphicon.glyphicon-flash 
+              |  Command executor
+            .panel-body Predefined commands:
+              p#predefined
+              textarea.form-control#commandsTextarea
+              p.text-muted provide input and click the button
+              .text-right
+                a.btn.btn-primary#sendCommandsBtn(href="javascript:void(0);") Send command 
+                  span.glyphicon.glyphicon-console              
+          div#resultComment
+              
+        .col-md-6
+          .panel.panel-default 
+            .panel-heading 
+              span.glyphicon.glyphicon-cog 
+              |  Remote calculation result
+            .panel-body 
+              table.table.table-bordered#resultTable
+                tbody 
+        
+    footer.footer
+      .container
+        p.text-muted Originally created by Mikhail Baytsurov 
+          a(href="mailto:barthezzko@gmail.com") barthezzko@gmail.com
+
+    script(src='js/jquery-3.2.1.min.js')
+    script(src='js/bootstrap.min.js')
+    script(src='js/utils.js')

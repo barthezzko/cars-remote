@@ -6,6 +6,9 @@ import java.util.function.Consumer;
 
 import org.apache.log4j.Logger;
 
+import com.barthezzko.web.Config;
+import com.google.inject.Inject;
+
 public class CarPositionCalculatorImpl implements CarPositionCalculator {
 
 	private final int gridSize;
@@ -13,8 +16,9 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 	private static final String POS_DLMTR = ",";
 	private Logger logger = Logger.getLogger(CarPositionCalculatorImpl.class);
 
-	public CarPositionCalculatorImpl(int gridSize) {
-		this.gridSize = gridSize;
+	@Inject
+	public CarPositionCalculatorImpl(Config config) {
+		this.gridSize = config.getGridSize();
 	}
 
 	public Position calculate(String input) {
