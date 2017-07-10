@@ -7,6 +7,6 @@
     <link href="<%=request.getContextPath()%>/resources/css/styles.css" rel="stylesheet">
 </head>
 <body>
-	<>
+	<h2>OLE</h2>
 </body>
 </html>
