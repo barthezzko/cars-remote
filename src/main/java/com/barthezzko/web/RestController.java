@@ -52,7 +52,7 @@ public class RestController {
 			String errorMessage = toJson(error("Error during processing your request, cause: " + e.getMessage()));
 			logger.error("OUT: " + errorMessage);
 			res.body(errorMessage);
-			res.status(500);
+			res.status(200);
 		});
 		get("serverStatus", (req, res) -> "ok");
 	}

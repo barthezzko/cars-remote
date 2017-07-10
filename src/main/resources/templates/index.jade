@@ -15,51 +15,39 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Project name
-        #navbar.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li.active
-              a(href='#') Home
-            li
-              a(href='#about') About
-            li
-              a(href='#contact') Contact
-            li.dropdown
-              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                | Dropdown 
-                span.caret
-              ul.dropdown-menu
-                li
-                  a(href='#') Action
-                li
-                  a(href='#') Another action
-                li
-                  a(href='#') Something else here
-                li.divider(role='separator')
-                li.dropdown-header Nav header
-                li
-                  a(href='#') Separated link
-                li
-                  a(href='#') One more separated link
+          a.navbar-brand(href='javascript:void(0);') 
+            span.glyphicon.glyphicon-cloud
+            |  Remote Cars
 
     .container
-      h2 Remote cars
       p
         .col-md-6
-          h3 Commands
-          p#predefined 
-          form(action="#")
-          .form-group
-            textarea.form-control#commandsTextarea
-          .form-group
-            div#resultComment
-          a.btn.btn-primary#sendCommandsBtn(href="#") Send commands
+          .panel.panel-default 
+            .panel-heading 
+              span.glyphicon.glyphicon-flash 
+              |  Command executor
+            .panel-body Predefined commands:
+              p#predefined
+              textarea.form-control#commandsTextarea
+              p.text-muted provide input and click the button
+              .text-right
+                a.btn.btn-primary#sendCommandsBtn(href="javascript:void(0);") Send command 
+                  span.glyphicon.glyphicon-console              
+          div#resultComment
+              
         .col-md-6
-          table.table.table-bordered.table-striped#resultTable 
+          .panel.panel-default 
+            .panel-heading 
+              span.glyphicon.glyphicon-cog 
+              |  Remote calculation result
+            .panel-body 
+              table.table.table-bordered#resultTable
+                tbody 
         
     footer.footer
       .container
-        p.text-muted Place sticky footer content here.
+        p.text-muted Originally created by Mikhail Baytsurov 
+          a(href="mailto:barthezzko@gmail.com") barthezzko@gmail.com
 
     script(src='js/jquery-3.2.1.min.js')
     script(src='js/bootstrap.min.js')

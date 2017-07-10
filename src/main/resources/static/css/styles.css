@@ -39,4 +39,5 @@ code {
 }
 table#resultTable td {
 	cursor: pointer;
+	padding:7px;
 }
