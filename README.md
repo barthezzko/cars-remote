@@ -16,11 +16,9 @@ BootstrapJS+Jquery | Rich JS UI Components | http://getbootstrap.com/
 When started: http://localhost:9000/
 
 ## Configuration
-`
-server.port = 9000
-gridSize = 15
+` server.port = 9000 `
+` gridSize = 15 `
 
-`
 ## REST Methods
 RequestType | Method | Params 
 ------------ | ------------ | ------------- 
