@@ -17,17 +17,18 @@ import spark.ModelAndView;
 import spark.template.jade.JadeTemplateEngine;
 
 
-public class RestController {
+public class MVCandRestController {
 
-	private Logger logger = Logger.getLogger(RestController.class);
+	private Logger logger = Logger.getLogger(MVCandRestController.class);
 	
-	public RestController(CarPositionCalculator carPosCalc){
+	public MVCandRestController(CarPositionCalculator carPosCalc){
 		//staticFiles.location("static"); // Static files
 		externalStaticFileLocation("src/main/resources/static/");
 		get("/", (req, res) -> new ModelAndView(new HashMap<String, Object>(), "index"), new JadeTemplateEngine());
 		post("/calc", (req, res) -> {
 			return success(carPosCalc.calculate(param(req, "instruction")));
 		}, json());
+		get("/config", (req, res)-> carPosCalc.getConfig(), json());
 		before("/*", (q, a) -> {
 			StringBuilder sb = new StringBuilder("IN: ").append(q.requestMethod()).append(" | ").append(q.pathInfo())
 					.append(" | payload: [");

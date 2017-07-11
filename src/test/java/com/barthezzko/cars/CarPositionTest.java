@@ -19,6 +19,10 @@ public class CarPositionTest {
 		assertEquals(Position.of(6, 6, Direction.EAST), calc.calculate("6,6:FFLFFLFFLFF"));
 		assertEquals(Position.of(1, 4, Direction.WEST), calc.calculate("5,5:FLFLFFRFFF"));
 	}
+	@Test
+	public void testDoNothing(){
+		assertEquals(Position.of(5, 5, Direction.NORTH), calc.calculate("5,5:"));
+	}
 	
 	@Test(expected = InvalidPositionException.class)
 	public void testInvalidPos(){
@@ -31,5 +35,15 @@ public class CarPositionTest {
 	@Test(expected = InvalidPositionException.class)
 	public void testInvalidPos3(){
 		assertEquals(Position.of(16, 0, Direction.NORTH), calc.calculate("5,10:FFFFFF"));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void invalidInputNoInitialPosition(){
+		assertEquals(Position.of(0, 0, Direction.NORTH), calc.calculate("510:F"));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void invalidInputNoSemicolon(){
+		assertEquals(Position.of(0, 0, Direction.NORTH), calc.calculate("5,10"));
 	}
 }

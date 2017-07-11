@@ -2,10 +2,12 @@ package com.barthezzko.cars;
 
 import java.util.function.BiConsumer;
 
+import com.barthezzko.web.Config;
+
 public interface CarPositionCalculator {
 
 	Position calculate(String input);
-
+	
 	public static class Position {
 		private int x;
 		private int y;
@@ -124,5 +126,7 @@ public interface CarPositionCalculator {
 			consumer.accept(t, augment);
 		}
 	}
+
+	Config getConfig();
 
 }

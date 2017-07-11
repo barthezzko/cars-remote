@@ -53,7 +53,7 @@ public class Server extends AbstractModule {
 		int port = propInt("server.port");
 		port(port);
 		logger.info("Running web application at: http://localhost:" + port + " ...");
-		new RestController(carPosCalculator);
+		new MVCandRestController(carPosCalculator);
 		logger.info("Controller added");
 		Spark.awaitInitialization();
 		logger.info("Now application is running");
@@ -99,6 +99,11 @@ public class Server extends AbstractModule {
 
 		public Object getPayload() {
 			return payload;
+		}
+
+		@Override
+		public String toString() {
+			return "Response [responseType=" + responseType + ", payload=" + payload + "]";
 		}
 	}
 

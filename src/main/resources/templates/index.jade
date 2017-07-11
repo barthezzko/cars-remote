@@ -33,7 +33,9 @@ html(lang='en')
               .text-right
                 a.btn.btn-primary#sendCommandsBtn(href="javascript:void(0);") Send command 
                   span.glyphicon.glyphicon-console              
-          div#resultComment
+          .panel.panel-default#resultComment
+            .panel-heading Result will be shown here
+            .panel-body Response body            
               
         .col-md-6
           .panel.panel-default 
@@ -43,13 +45,14 @@ html(lang='en')
             .panel-body
               div.text-right
                 code
-                  span Top-right corner has coordinates (14,14)
+                  span#topRightComment
                   span.glyphicon.glyphicon-arrow-down  
               table.table.table-bordered#resultTable
                 tbody
               code
                 span.glyphicon.glyphicon-arrow-up 
                 |  Bottom-left corner has coordinates (0,0) 
+              div.text-center.text-muted Hover cells for tooltips
         
     footer.footer
       .container

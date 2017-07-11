@@ -11,14 +11,14 @@ import com.google.inject.Inject;
 
 public class CarPositionCalculatorImpl implements CarPositionCalculator {
 
-	private final int gridSize;
+	private final Config config;
 	private static final String PARTS_DLMTR = ":";
 	private static final String POS_DLMTR = ",";
 	private Logger logger = Logger.getLogger(CarPositionCalculatorImpl.class);
 
 	@Inject
 	public CarPositionCalculatorImpl(Config config) {
-		this.gridSize = config.getGridSize();
+		this.config = config;
 	}
 
 	public Position calculate(String input) {
@@ -92,7 +92,7 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 
 	private void validatePosition(Position pos){
 		logger.info("Validating pos: " + pos);
-		if (pos.getX() < 0 || pos.getY() < 0 || pos.getX() > gridSize || pos.getY() > gridSize){
+		if (pos.getX() < 0 || pos.getY() < 0 || pos.getX() > config.getGridSize()-1 || pos.getY() > config.getGridSize()-1){
 			throw new InvalidPositionException("Position [" + pos +"] is invalid (is out of grid boundaries)");
 		}
 	}
@@ -103,5 +103,10 @@ public class CarPositionCalculatorImpl implements CarPositionCalculator {
 		public InvalidPositionException(String msg) {
 			super(msg);
 		}
+	}
+
+	@Override
+	public Config getConfig() {
+		return config;
 	}
 }
