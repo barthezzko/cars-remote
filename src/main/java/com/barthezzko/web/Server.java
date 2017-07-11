@@ -10,6 +10,10 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import spark.Request;
+import spark.ResponseTransformer;
+import spark.Spark;
+
 import com.barthezzko.cars.CarPositionCalculator;
 import com.barthezzko.cars.CarPositionCalculatorImpl;
 import com.google.gson.Gson;
@@ -17,9 +21,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Scopes;
-
-import spark.Request;
-import spark.ResponseTransformer;
 
 public class Server extends AbstractModule {
 
@@ -49,8 +50,13 @@ public class Server extends AbstractModule {
 	}
 
 	private void runServer() {
-		port(propInt("server.port"));
+		int port = propInt("server.port");
+		port(port);
+		logger.info("Running web application at: http://localhost:" + port + " ...");
 		new RestController(carPosCalculator);
+		logger.info("Controller added");
+		Spark.awaitInitialization();
+		logger.info("Now application is running");
 	}
 
 	private void prepareInjection() {

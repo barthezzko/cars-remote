@@ -21,15 +21,15 @@ function Utils(){
 				success: function(data){
 					$('#resultComment').html(JSON.stringify(data));
 					var className = 'alert '
-					$('#'+latest.x+'_'+latest.y).html('.');
+					$('#'+latest.x+'_'+latest.y).html('<span class="glyphicon glyphicon-remove"/>');
 					$('table#resultTable tbody tr td').removeClass('success');
 					if (data.responseType == 'SUCCESS'){
 						var pl = data.payload;
 						className +='alert-success';
-						$('#'+pl.x+'_'+pl.y).html('<span class="'+decodePL(pl.direction)+'" aria-hidden="true"></span><br/>[' + pl.x+','+ pl.y +']');
-						$('#'+pl.x+'_'+pl.y).addClass('success');
-						latest.x = pl.x;
+						$('#'+pl.x+'_'+pl.y).html('<span class="'+decodePL(pl.direction)+'" aria-hidden="true"></span>');
+						$('#'+pl.x+'_'+pl.y).parent().addClass('success');
 						latest.y = pl.y;
+						latest.x = pl.x;
 					} else {
 						className +='alert-danger';
 					}
@@ -58,14 +58,17 @@ function Utils(){
 	}
 	var redrawTable = function(){
 		var table_html = '';
-		for (i=1;i<=gridSize;i++){
+		for (i=0;i<gridSize;i++){
 			table_html += '<tr>'; 
-			for (k=1;k<=gridSize;k++){
-				table_html += '<td class="col-xs-01 text-center" id="' + i + '_' + k+'">.</td>';
+			for (k=0;k<gridSize;k++){
+				table_html += '<td class="col-xs-01 text-center"><a href="#" data-toggle="tooltip" title="Cell ('+k+','+(gridSize-i-1)+')" id="' + k + '_' + (gridSize-i-1)+'"><span class="glyphicon glyphicon-remove"/></a></td>';
 			}
 			table_html += '</tr>';
 		}
 		$('table#resultTable tbody').append(table_html);
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip(); 
+		});
 	}
 	
 }

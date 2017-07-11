@@ -48,7 +48,6 @@ public class RestController {
 			logger.info("OUT: " + a.body());
 		});
 		exception(Exception.class, (e, req, res) -> {
-			logger.error(e, e);
 			String errorMessage = toJson(error("Error during processing your request, cause: " + e.getMessage()));
 			logger.error("OUT: " + errorMessage);
 			res.body(errorMessage);

@@ -26,7 +26,7 @@ html(lang='en')
             .panel-heading 
               span.glyphicon.glyphicon-flash 
               |  Command executor
-            .panel-body Predefined commands:
+            .panel-body Predefined commands [clickable]:
               p#predefined
               textarea.form-control#commandsTextarea
               p.text-muted provide input and click the button
@@ -40,14 +40,23 @@ html(lang='en')
             .panel-heading 
               span.glyphicon.glyphicon-cog 
               |  Remote calculation result
-            .panel-body 
+            .panel-body
+              div.text-right
+                code
+                  span Top-right corner has coordinates (14,14)
+                  span.glyphicon.glyphicon-arrow-down  
               table.table.table-bordered#resultTable
-                tbody 
+                tbody
+              code
+                span.glyphicon.glyphicon-arrow-up 
+                |  Bottom-left corner has coordinates (0,0) 
         
     footer.footer
       .container
         p.text-muted Originally created by Mikhail Baytsurov 
-          a(href="mailto:barthezzko@gmail.com") barthezzko@gmail.com
+          a(href="mailto:barthezzko@gmail.com") 
+            span.glyphicon.glyphicon-envelope
+            |  barthezzko@gmail.com
 
     script(src='js/jquery-3.2.1.min.js')
     script(src='js/bootstrap.min.js')
